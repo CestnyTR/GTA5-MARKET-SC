@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="veiwport" content="width-device-width, initial-scale=1.0">
+    <title>Eightborn Market</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+
+<body>
+    <div id="background"></div>
+    <div id="main-wrap">
+
+        <div id="left-side">
+            <div id="search-area">
+                <input type="text" id="search-input" placeholder="Ürün ara">
+                <div id="search-dropdown">
+                </div>
+            </div>
+
+            <div id="categories-header"><span>Kategoriler</span></div>
+            <div id="categories-area">
+                <div class="categories-area-entry">
+                    <img src="assets/bread.png" alt="bread">
+                    <span>Besinler</span>
+                </div>
+                <div class="categories-area-entry">
+                    <img src="assets/tools.png" alt="tools">
+                    <span>Araçlar</span>
+                </div>
+                <div class="categories-area-entry">
+                    <img src="assets/resources.png" alt="resources">
+                    <span>Kaynaklar</span>
+                </div>
+                <div class="categories-area-entry">
+                    <img src="assets/others.png" alt="resources">
+                    <span>Diğerleri</span>
+                </div>
+            </div>
+            <div id="history-button" onclick="openHistory()"><span>İşlemler</span></div>
+            <div id="sell-button" onclick="openListCreation()"><span>İlan Oluştur</span></div>
+            <div id="exit-button" onclick="exit()"><span>Çıkış</span></div>
+        </div>
+        <div id="right-side">
+            <div id="top-side">
+                <div id="top-side-header"> Eightborn Ticaret Merkezi</div>
+                <div id="top-side-info">
+                    <div id="top-side-info-cash">
+                        <img src="assets/cash.png" alt="cashImage">
+                        <span>$0</span>
+                    </div>
+                    <div id="top-side-info-bank">
+                        <img src="assets/bank.png" alt="bankImage">
+                        <span>$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bot-side">
+                <div id="toolbar">
+                    <div id="reload-button" onclick="reloadList()">
+                        <img src="assets/refresh.png" alt="refreshImg">
+                    </div>
+
+                    <div class="checkbox-container styled-input-single styled-input--square">
+                        <input type="checkbox" name="can-afford-input" id="can-afford-input">
+                        <label for="can-afford-input">Satın alınabilir</label>
+                    </div>
+                    <div class="checkbox-container styled-input-single styled-input--square">
+                        <input type="checkbox" name="can-carry-input" id="can-carry-input">
+                        <label for="can-carry-input">Taşınabilir</label>
+                    </div>
+                    <div id="page-nav">
+                        <div id="prev-page-button" class="page-button" onclick="prevPage()">
+                            <img src="assets/left-foward.png" alt="backfowardImage">
+                        </div>
+
+                        <div id="page-number"></div>
+
+                        <div id="foward-page-button" class="page-button"  onclick="nextPage()">
+                            <img src="assets/right-foward.png" alt="backfowardImage">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="table-area">
+                    <div id="table-header" class="table-entry">
+                        <div id="sort-name" onclick="sortByName()">
+                            <span>İsim</span>
+                            <img src="assets/down.png" alt="down">
+
+                        </div>
+                        <div id="sort-price" onclick="sortByPrice()">
+                            <span>Fiyat</span>
+                        </div>
+                        <div id="sort-count" onclick="sortByCount()">
+                            <span>Adet</span>
+                        </div>
+                        <div id="sort-weight" onclick="sortByWeight()">
+                            <span>Kilo</span>
+                        </div>
+                        <div id="sort-time" onclick="sortByTime()">
+                            <span>İlan süresi</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="table">
+                        <div class="table-entry">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="sell-create-wrap">
+            <div class="mask"></div>
+            <div id="sell-create">
+                <div id="sell-top">
+                    <span>İlan Oluştur</span>
+                </div>
+                <div id="sell-bot">
+                    <div id="item-list-container">
+                        <h2>Satılacak Item</h2>
+                        <div id="item-list"></div>
+                    </div>
+                    <div id="item-info">
+                        <div id="item-card">
+                        </div>
+                        <div id="item-input-area">
+                            <div id="item-price-area">
+                                <div>
+                                    <label for="item-price-input">Fiyat</label>
+                                    <input id="item-price-input" type="number" min="0.1" value="0">
+                                    <span>$</span>
+                                </div>
+                                <div>
+                                    <label for="item-count-input">Adet</label>
+                                    <input id="item-count-input" type="number" min="1" value="0">
+                                </div>
+                                <div>
+                                    <label for="item-time-input">Süre (GÜN)</label>
+                                    <input id="item-time-input" type="number" min="1" max="7" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sell-calculations">
+                            <div>
+                                <label for="calc-fee" style="color:red;">Vergi</label>
+                                <input id="calc-fee" type="string" disabled value="0">
+                                <span>$</span>
+                            </div>
+                            <div>
+                                <label for="calc-fee-list" style="color:red;"> Listeleme Vergisi</label>
+                                <input id="calc-fee-list" type="string" disabled value="0">
+                                <span>$</span>
+                            </div>
+                            <div>
+                                <label for="calc-total-earning" style="color:green;">Toplam Kazanç</label>
+                                <input id="calc-total-earning" type="string" disabled value="0">
+                                <span>$</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="create-order-button" onclick="tryCreateListing()"> Listele</div>
+                    <div id="create-order-cancel-button" onclick="cancelListingCreation()"> İptal</div>
+                </div>
+            </div>
+        </div>
+        <div id="buy-wrap">
+            <div class="mask"></div>
+            <div id="buy-container">
+                <div id="buy-top">
+                    <span>Satın al</span>
+                </div>
+                <div id="buy-bot">
+                    <div id="buy-info">
+                        <div id="buy-info-labeling">
+                            <img id="buy-info-img" src="assets/bread.png" alt="Bread">
+                            <div id="buy-info-label">Ekmek</div>
+                        </div>
+                        <div id="buy-info-amounts">
+                            <div id="buy-info-price">
+                                <span>Adet Fiyat: </span>
+                                <span>$50</span>
+                            </div>
+                            <div id="buy-info-count">
+                                <span>Toplam Adet: </span>
+                                <span>50</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="buy-inputs">
+                        <div>
+                            <label for="buy-count">Miktar</label>
+                            <input id="buy-count" type="number" min="0.1" value="0"
+                                style="pointer-events: all !important;">
+                        </div>
+                        <div>
+                            <label for="buy-tax" style="color: red;">Vergi</label>
+                            <input id="buy-tax" type="text" disabled min="1" value="0">
+                            <span>$</span>
+                        </div>
+                        <div>
+                            <label for="buy-total" style="color: green;"> Toplam Tutar</label>
+                            <input id="buy-total" type="text" disabled min="1" value="0">
+                            <span>$</span>
+                        </div>
+                    </div>
+                    <div id="buy-button-area">
+                        <div id="buy-button" onclick="tryBuy()">Satın al</div>
+                        <div id="buy-cancel" onclick="closeBuyMenu()">İptal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="history-wrap">
+            <div class="mask"> </div>
+            <div id="history-container">
+                <div id="history-top">
+                    <div onclick="openActiveOrder()" class="selected">Aktif ilanlarım</div>
+                    <div onclick="openOldOrders()">Geçmiş ilanlarım</div>
+                    <div onclick="openOldPurchases()">Satın Alımlarım</div>
+                </div>
+                <div id="history-bot">
+                    <div id="history-table">
+                        <div id="history-table-header" class="history-table-entry">
+                            <div> Ürün </div>
+                            <div>Fiyat</div>
+                            <div>Adet</div>
+                            <div>Kalan süre <img src="assets/down.png" alt="downImage"></div>
+                            <div>Yayın tarihi</div>
+                        </div>
+                        <div id="history-table-entry-area">
+                            <div class="history-table-entry selected">
+                                <div>
+                                    <img src="assets/bread.png" alt="Ekmek">
+                                    <span>Ekmek</span>
+                                </div>
+                                <div>$5</div>
+                                <div>15</div>
+                                <div>5 gün</div>
+                                <div>12/05/2023 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="history-controls">
+                        <div id="history-remove-order" class="disabled"  onclick="removeActiveOrder()"> İlanı kaldır</div>
+                        <div id="history-exit" onclick="historyExit()">Çıkış </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="notif-wrap">
+            <div class="mask"> </div>
+            <div id="notif-container"> <span></span></div>
+
+        </div>
+    </div>
+    <script src="src/config.js"></script>
+    <script src="src/scripts.js"></script>
+</body>
+
+</html>
